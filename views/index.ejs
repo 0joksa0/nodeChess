@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="nav.css" />
+    <link rel="stylesheet" href="index.css">
+  </head>
+
+  <body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="hero">
+      <div class="textHero">
+        <h1>Welcome to Chess Game!</h1>
+        <p>
+          Experience the excitement of multiplayer chess battles from your
+          browser. Challenge friends, compete globally, and showcase your
+          skills.
+        </p>
+        <div>
+          <h2>Features:</h2>
+          <ul>
+            <li>Real-time multiplayer matches.</li>
+            <li>Various game modes and time controls.</li>
+            <li>Track your progress with statistics and leaderboards.</li>
+            <li>Master advanced moves and tactics.</li>
+            <li>Face a challenging chess engine (coming soon).</li>
+          </ul>
+        </div>
+        <p>Join today and make your move towards victory!</p>
+        <a href="/" id="signUp" class="button"><h1>LOG IN</h1></a>
+      </div>
+      <div class="heroImg">
+        <img src="./imgs/heroImg.png" alt="" srcset="" />
+      </div>
+    </div>
+  </body>
+</html>

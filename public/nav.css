@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Belanosima&display=swap');
+*{
+    margin: 0;
+}
+
+a{
+
+    text-decoration: none;
+    color: azure;
+}
+
+.site-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 15px 5px 15px;
+}
+
+.site-nav h1 {
+    font-size: 2.5rem;
+    color: azure;
+}
+
+.site-nav ul{
+    list-style-type: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    color: azure;
+}
+
+.site-nav li{
+    margin: 10px;
+    color: azure;
+}
+
+.button{
+    padding: 15px;
+    border-radius: 15px;
+}
+#logIn{
+    background-color: #200E4C;
+}
+#logIn:hover{
+    background-color: #5C1E78;
+}
+
+#signUp{
+    background-color: rgb(125,0,106);
+}
+
+#signUp:hover{
+    background-color: #200E4C;
+}
+
+#avatar{
+    height: 3.2rem;
+    margin-left:20px;
+    filter: invert(100);
+}
+
+
