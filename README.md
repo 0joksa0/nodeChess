@@ -62,7 +62,7 @@ The Chess Game project has the following structure:
 - `app.js`: The main server file responsible for managing game state, enforcing rules, and handling communication with clients.
 - `public/`: Contains the client-side JavaScript, CSS, and HTML files for the user interface.
 - `src/`: Includes additional server-side logic and utilities for the game.
-- `database/`: Holds the database-related files, such as models and connection configurations.
+- `models/`: Holds the database-related files, such as models and connection configurations.
 
 ## User Statistics
 
