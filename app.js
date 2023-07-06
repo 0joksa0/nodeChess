@@ -28,11 +28,48 @@ app.get('/', (req,res) => {
 })
 
 app.get('/signUp', (req, res) => {
-    res.render('signUp');
+    res.render('signUp', { failed: 0});
 })
 
 app.post('/signUp', (req, res) => {
     const user = new User(req.body);
-    user.save();
-    res.send(user);
+    User.find({ username: user.username})
+    .then((result) => { 
+        if(result.length > 0){
+            res.render('signUp', { failed: 1} );
+        }else{
+            console.log("in else part")
+            user.save();
+            res.render('signUp', { failed: 2} );
+
+        }
+    })
+    //user.save();
+    //res.send(user);
+});
+
+app.get('/logIn', (req, res) => {
+    res.render('logIn', { failed: 0});
+});
+
+
+app.post('/logIn', (req, res) => {
+    User.findOne({ username: req.body.username})
+    .then((result) => { 
+        const user = new User(result)
+        //console.log(user)
+        if(result == null){
+            res.render('logIn', { failed: 1} );
+        }else{
+    
+            if(user.password == req.body.password){
+            console.log("in else part")
+            
+            res.render('logIn', { failed: 2} );
+            }else{
+                res.render('logIn', { failed: 1} );
+            }
+        }
+    })
+    //res.render('logIn', { failed: 0});
 });
