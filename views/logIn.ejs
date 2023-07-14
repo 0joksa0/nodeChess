@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="nav.css">
+    <link rel="stylesheet" href="signUp.css">
+</head>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="signUp content">
+        <form action="/logIn" method="post" class="signUpForm">
+            <h1>Log in</h1>
+            <% if (failed == 1) { %>
+             <p style= "color: red">Invalid username or password</p>
+            <% } %>
+            <% if (failed == 2) { %>
+                <h3 style= "color: lawngreen">LOGGED IN</h3>
+            <% } %>
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password">
+            <button class="submitBtn">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
