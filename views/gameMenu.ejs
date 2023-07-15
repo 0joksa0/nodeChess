@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOBBY</title>
     <link rel="stylesheet" href="/nav.css">
-    <link rel="stylesheet" href="/lobby.css">
+    <link rel="stylesheet" href="/gameMenu.css">
 </head>
 <body>
     <%- include('./partials/navLog.ejs') %>
+
+    <div class="content">
+        <a href="/game/<%= id %>">
+            <p>PLAY A GAME</p>
+        </a>
+    </div>
 
     <script>
         var photo = document.getElementById('avatar');

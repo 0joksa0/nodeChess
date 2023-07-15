@@ -11,6 +11,7 @@ body{
     display: flex;
     justify-content: space-around;
     color: azure;
+    animation: 0.5s ease-out 0s 1 popUp;
 }
 .textHero{
     height: 100%;

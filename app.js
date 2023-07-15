@@ -73,23 +73,23 @@ app.post("/logIn", (req, res) => {
     }
     if(!loggedUser.includes(user))
         loggedUser.push(user)
-    res.redirect('/lobby/' + user.id);
+    res.redirect('/gameMenu/' + user.id);
     console.log("Logged in user id:" + user.id);
     return;
   });
   //res.render('logIn', { failed: 2});
 });
 
-app.get("/lobby", (req, res) => {
-    res.render('lobby');
+app.get("/gameMenu", (req, res) => {
+    res.redirect("/")
 });
 
-app.get("/lobby/:id", (req, res) => {
+app.get("/gameMenu/:id", (req, res) => {
     const  id = req.params.id;
     console.log(id)
     User.findById(id).then( (result)=>{
       console.log(result.name, result.lastname);
-        res.render('lobby', result);
+        res.render('gameMenu', result);
     })
     .catch((err) => {
         console.log(err);
