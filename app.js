@@ -96,3 +96,8 @@ app.get("/gameMenu/:id", (req, res) => {
         res.redirect('/logIn');
     })
 });
+
+app.get("/board", (req,res) => {
+  res.render("board");
+});
+
