@@ -8,12 +8,14 @@
       <li><a href="/gameMenu">GAME</a></li>
     </ul>
     <ul>
-      <a href="/signUp">
-        <li id="signUp" class="button">Sign up</li>
-      </a>
-      <a href="/logIn">
-        <li id="logIn" class="button">Log in</li>
-      </a>
+      <h2><%= username %></h2>
       <img id="avatar" src="/imgs/avatarEmpty.png" alt="" />
     </ul>
-  </nav>
+</nav>
+<div class="sideBar hidden">
+    <h4><%= name %></h4>
+    <h4><%= lastname %></h4>
+    <a href="/signUp">
+        <p id="logOut" class="button">Log out</p>
+      </a>
+</div>

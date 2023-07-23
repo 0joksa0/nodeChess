@@ -10,6 +10,8 @@ const dbUrl =
 
 app.set("view engine", "ejs");
 
+var loggedUser = new Array(); 
+
 mongoose
   .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
@@ -62,15 +64,40 @@ app.post("/logIn", (req, res) => {
     }
 
     if (user.password != req.body.password) {
-      console.log("in else part");
+      console.log("in else part" + user.id);
 
       //make changes for logged users for :id and push them go game page
+      
       res.render("logIn", { failed: 1 });
       return;
     }
-      
-    res.render("logIn", { failed: 2 });
-    
+    if(!loggedUser.includes(user))
+        loggedUser.push(user)
+    res.redirect('/gameMenu/' + user.id);
+    console.log("Logged in user id:" + user.id);
+    return;
   });
-  res.render('logIn', { failed: 0});
+  //res.render('logIn', { failed: 2});
 });
+
+app.get("/gameMenu", (req, res) => {
+    res.redirect("/")
+});
+
+app.get("/gameMenu/:id", (req, res) => {
+    const  id = req.params.id;
+    console.log(id)
+    User.findById(id).then( (result)=>{
+      console.log(result.name, result.lastname);
+        res.render('gameMenu', result);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.redirect('/logIn');
+    })
+});
+
+app.get("/board", (req,res) => {
+  res.render("board");
+});
+
