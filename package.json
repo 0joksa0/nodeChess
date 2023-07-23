@@ -9,11 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cm-chessboard": "^7.7.7",
     "ejs": "^3.1.9",
     "express": "^4.18.2",
     "mongoose": "^7.3.1"
   },
   "engines": {
-  "node": ">=18 <19"
-}
+    "node": ">=18 <19"
+  }
 }
