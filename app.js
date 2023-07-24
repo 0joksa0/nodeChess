@@ -1,16 +1,24 @@
 const express = require("express");
+const session = require("express-session");
 const mongoose = require("mongoose");
 const User = require("./models/user");
 
 const app = express();
 
+//array of logged users
+var loggedUsers = new Array(); 
+
 //const for mongo db url
 const dbUrl =
   "mongodb+srv://chessGame:chess123@nodecc.9ciscng.mongodb.net/?retryWrites=true&w=majority";
 
+//const for session secret and cookie life time
+const secret = "secret";
+const oneDay = 1000 * 60 * 60 * 24;
+
+//set for ejs template engine
 app.set("view engine", "ejs");
 
-var loggedUser = new Array(); 
 
 mongoose
   .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -25,66 +33,108 @@ mongoose
 
 //static middleware
 app.use(express.static("public"));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(session({ secret: secret, resave: false, saveUninitialized: true, cookie: { maxAge: oneDay } }));
+
 
 app.get("/", (req, res) => {
-  res.render("index");
+  //res.render("index");
+  var loggedUser = isLoggedIn(req);
+  if(!loggedUser)
+    res.render("index", {username: null});
+  else{
+    res.render("index", {username: loggedUser.username, name: loggedUser.name, lastname: loggedUser.lastname} );
+  }
 });
 
 app.get("/signUp", (req, res) => {
-  res.render("signUp", { failed: 0 });
+  var loggedUser = isLoggedIn(req);
+  if(!loggedUser){
+    res.render("signUp", { failed: null });
+    return;
+  }
+  res.redirect("/");
 });
 
 app.post("/signUp", (req, res) => {
   const user = new User(req.body);
   User.find({ username: user.username }).then((result) => {
     if (result.length > 0) {
-      res.render("signUp", { failed: 1 });
+      res.render("signUp", { failed: true });
     } else {
       console.log("in else part");
       user.save();
-      res.render("signUp", { failed: 2 });
+      res.render("signUp", { failed: false });
     }
   });
-  //user.save();
-  //res.send(user);
 });
 
 app.get("/logIn", (req, res) => {
-  res.render("logIn", { failed: 0 });
+  var loggedUser = isLoggedIn(req);
+  if(!loggedUser){
+    res.render("logIn", { failed: null });
+    return;
+  }
+  res.redirect("/")
 });
 
 app.post("/logIn", (req, res) => {
   User.findOne({ username: req.body.username }).then((result) => {
     const user = new User(result);
     //console.log(user)
+    
+    //bad username
     if (result == null) {
-      res.render("logIn", { failed: 1 });
+      res.render("logIn", { failed: true });
       return;
     }
 
+    //bad password
     if (user.password != req.body.password) {
-      console.log("in else part" + user.id);
-
-      //make changes for logged users for :id and push them go game page
-      
-      res.render("logIn", { failed: 1 });
+      //console.log("in else part" + user.id);
+      res.render("logIn", { failed: true });
       return;
     }
-    if(!loggedUser.includes(user))
-        loggedUser.push(user)
-    res.redirect('/gameMenu/' + user.id);
+
+    //save user id in session and pushing that session to loggedUsers array
+    var session = req.session;
+    session.userid = user.id;
+
+    if(!loggedUsers.includes(user))
+        loggedUsers.push({session: req.session, user: user})
+    console.log(loggedUsers)
+
+    res.redirect('/gameMenu');
     console.log("Logged in user id:" + user.id);
     return;
   });
-  //res.render('logIn', { failed: 2});
+
+});
+
+app.get("/logOut", (req, res) => {
+  var loggedUser = isLoggedIn(req);
+  if(!loggedUser)
+    res.redirect("/")
+  else{
+    //removing user from loggedUsers array
+    loggedUsers = loggedUsers.filter( (user) => user.session.id != req.session.id);
+    console.log(loggedUsers)
+    req.session.destroy();
+    res.redirect("/");
+  }
 });
 
 app.get("/gameMenu", (req, res) => {
+  var loggedUser = isLoggedIn(req);
+  if(!loggedUser)
     res.redirect("/")
+  else{
+    res.render("gameMenu", {username: loggedUser.username, name: loggedUser.name, lastname: loggedUser.lastname} );
+  }
 });
 
-app.get("/gameMenu/:id", (req, res) => {
+/*app.get("/gameMenu/:id", (req, res) => {
     const  id = req.params.id;
     console.log(id)
     User.findById(id).then( (result)=>{
@@ -95,9 +145,20 @@ app.get("/gameMenu/:id", (req, res) => {
         console.log(err);
         res.redirect('/logIn');
     })
-});
+});*/
 
 app.get("/board", (req,res) => {
   res.render("board");
 });
 
+//check if user is logged in and return user or false
+function isLoggedIn(req) {
+  var loggedUser = loggedUsers.find( (user) => user.session.id == req.session.id);
+
+  return loggedUser != undefined ? loggedUser.user : false;
+}
+
+//404 page handler
+app.use((req, res, next) => {
+  res.status(404).render("404"); 
+})
