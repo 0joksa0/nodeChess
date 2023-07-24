@@ -29,8 +29,9 @@ document.body.onload = function() {
 
     socket.onmessage = function(message) {
 
-      console.log('Socket server message', message);
+      //console.log('Socket server message', message);
       let data = JSON.parse(message.data);
+      console.log('Socket server parsed message', data);
       document.getElementById('response').innerHTML = JSON.stringify(data, null, 2);
     };
   

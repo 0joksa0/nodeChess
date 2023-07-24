@@ -2,7 +2,8 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const User = require("./models/user");
-
+const WebSocket = require('ws');
+var httpServer;
 const app = express();
 
 //array of logged users
@@ -16,6 +17,9 @@ const dbUrl =
 const secret = "secret";
 const oneDay = 1000 * 60 * 60 * 24;
 
+//const for web socket server
+const wss = new WebSocket.Server({ noServer: true });
+
 //set for ejs template engine
 app.set("view engine", "ejs");
 
@@ -24,7 +28,7 @@ mongoose
   .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
     console.log("connection established to mongodb");
-    //app.listen(port);
+    //httpServer = app.listen(port);
 
     //console.log("listening on port 3001");
   })
@@ -100,7 +104,6 @@ app.post("/logIn", (req, res) => {
 
     //save user id in session and pushing that session to loggedUsers array
     var session = req.session;
-    session.userid = user.id;
 
     if(!loggedUsers.includes(user))
         loggedUsers.push({session: req.session, user: user})
@@ -149,7 +152,12 @@ app.get("/gameMenu", (req, res) => {
 });*/
 
 app.get("/board", (req,res) => {
+  var loggedUser = isLoggedIn(req);
+  if(!loggedUser)
+    res.redirect("/")
+  else{
   res.render("board");
+}
 });
 
 app.get("/test", (req,res) => {
@@ -161,6 +169,14 @@ app.get("/test", (req,res) => {
   }
 });
 
+//404 page handler
+app.use((req, res, next) => {
+  res.status(404).render("404"); 
+})
+
+module.exports = {app : app, loggedUsers: loggedUsers};
+
+
 //check if user is logged in and return user or false
 function isLoggedIn(req) {
   var loggedUser = loggedUsers.find( (user) => user.session.id == req.session.id);
@@ -168,9 +184,4 @@ function isLoggedIn(req) {
   return loggedUser != undefined ? loggedUser.user : false;
 }
 
-//404 page handler
-app.use((req, res, next) => {
-  res.status(404).render("404"); 
-})
-
-module.exports = {app : app, loggedUsers: loggedUsers};
+//make a game and return it
