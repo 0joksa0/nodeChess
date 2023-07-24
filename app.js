@@ -24,8 +24,9 @@ mongoose
   .connect(dbUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .then((result) => {
     console.log("connection established to mongodb");
-    app.listen(3001);
-    console.log("listening on port 3001");
+    //app.listen(port);
+
+    //console.log("listening on port 3001");
   })
   .catch((err) => {
     console.log("error connecting to mongodb: " + err);
@@ -37,7 +38,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({ secret: secret, resave: false, saveUninitialized: true, cookie: { maxAge: oneDay } }));
 
-
+//routes
 app.get("/", (req, res) => {
   //res.render("index");
   var loggedUser = isLoggedIn(req);
@@ -151,6 +152,15 @@ app.get("/board", (req,res) => {
   res.render("board");
 });
 
+app.get("/test", (req,res) => {
+  var loggedUser = isLoggedIn(req);
+  if(!loggedUser)
+    res.redirect("/")
+  else{
+    res.render("testLobby", {username: loggedUser.username, name: loggedUser.name, lastname: loggedUser.lastname} );
+  }
+});
+
 //check if user is logged in and return user or false
 function isLoggedIn(req) {
   var loggedUser = loggedUsers.find( (user) => user.session.id == req.session.id);
@@ -162,3 +172,5 @@ function isLoggedIn(req) {
 app.use((req, res, next) => {
   res.status(404).render("404"); 
 })
+
+module.exports = {app : app, loggedUsers: loggedUsers};
