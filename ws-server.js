@@ -4,7 +4,7 @@ const WebSocket = require("ws").Server;
 const server = require("http").createServer();
 const { app, loggedUsers } = require("./app.js");
 const Game = require("./models/game");
-const Chess = require("chessjs");
+const { Chess } = require("chess.js");
 //const session = require('express-session');
 
 const wss = new WebSocket({ server: server });
@@ -19,16 +19,55 @@ var games = new Array();
 wss.on("connection", (socket, req) => {
     console.log("Connection established");
     var user = currentPlayer(req);
-    checkIfUserIsInGame(user,socket);
+    checkIfUserIsInGame(user, socket);
+    var game = currentGame(user);
 
     socket.on("message", (message) => {
-        console.log(`received: ${message}`);
+        var data = JSON.parse(message);
+        switch (data.type) {
+            case "move":
+                console.log("move");
+                console.log(data.fen);
+                game.chess.load(data.fen);
+                console.log(game.chess._turn);
+                //game.chess._turn = game.chess._turn == "w" ? "b" : "w";
 
-        socket.send(
-            JSON.stringify({
-                answer: 42,
-            })
-        );
+                console.log(game.chess.isGameOver());
+                game.chess.fen();
+                if (game.chess.isGameOver()) {
+                    console.log("game over");
+                    game.player1socket.send(
+                        JSON.stringify({
+                            type: "gameOver",
+                            chess: game.chess.fen(),
+                            turn: game.chess._turn
+                        })
+                    );
+                    game.player2socket.send(
+                        JSON.stringify({
+                            type: "gameOver",
+                            chess: game.chess.fen(),
+                            turn: game.chess._turn
+                        })
+                    );
+                } else {
+                    game.player1socket.send(
+                        JSON.stringify({
+                            type: "updateBoard",
+                            chess: game.chess.fen(),
+                            turn: game.chess._turn
+                        })
+                    );
+                    game.player2socket.send(
+                        JSON.stringify({
+                            type: "updateBoard",
+                            chess: game.chess.fen(),
+                            turn: game.chess._turn
+                        })
+                    );
+                }
+                break;
+        }
     });
 });
 
@@ -47,43 +86,53 @@ function currentPlayer(req) {
     return null;
 }
 
-function checkIfUserIsInGame(user, socket){
+function currentGame(user) {
+    let index = games.findIndex((game) => game.player1 == user || game.player2 == user);
+    if (index == -1) return null;
+    else return games[index];
+}
+
+function checkIfUserIsInGame(user, socket) {
     let index = games.findIndex((game) => game.player1 == user || game.player2 == user);
     //not in game add it to game
-    if(index == -1){
-        addUserToGame(user,socket);
+    if (index == -1) {
+        addUserToGame(user, socket);
     } //already in game update socket and send board 
-    else{
-        if(games[index].player1 == user){
+    else {
+        if (games[index].player1 == user) {
             games[index].player1socket = socket;
             games[index].player1socket.send(JSON.stringify({
                 type: "gameStart",
                 color: "white",
-                board: games[index].board
+                chess: games[index].chess.fen(),
+                turn: games[index].chess._turn
             }));
-        } else{
+        } else {
             games[index].player2socket = socket;
             games[index].player2socket.send(JSON.stringify({
                 type: "gameStart",
                 color: "black",
-                board: games[index].board
+                chess: games[index].chess.fen(),
+                turn: games[index].chess._turn
             }));
         }
-        
+
     }
 }
 
-function addUserToGame(user,socket){
+function addUserToGame(user, socket) {
     if (games.length == 0) {
         var chess = new Chess();
+        console.log("flag");
+        //console.log(chess.fen());
         var game = new Game({
             player1: user,
             player1socket: socket,
             player2: null,
             player2socket: null,
-            board: chess,
+            chess: chess,
         });
-        //console.log(game);
+        console.log(game.chess.fen());
         games.push(game);
     } else {
         let index = games.findIndex((game) => game.player2 == null);
@@ -95,7 +144,7 @@ function addUserToGame(user,socket){
                 player1socket: socket,
                 player2: null,
                 player2socket: null,
-                board: chess,
+                chess: chess,
             });
             //console.log(game);
             games.push(game);
@@ -106,14 +155,14 @@ function addUserToGame(user,socket){
                 JSON.stringify({
                     type: "gameStart",
                     color: "white",
-                    board: games[index].board,
+                    chess: games[index].chess.fen()
                 })
             );
             games[index].player2socket.send(
                 JSON.stringify({
                     type: "gameStart",
                     color: "black",
-                    board: games[index].board,
+                    chess: games[index].chess.fen()
                 })
             );
             console.log(games);

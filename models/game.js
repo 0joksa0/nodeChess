@@ -6,7 +6,7 @@ const gameSchema = new Schema({
     player1socket:{},
     player2:{},    
     player2socket:{},
-    board:{}
+    chess:{}
 });
 
 const Game = mongoose.model('Game', gameSchema);
