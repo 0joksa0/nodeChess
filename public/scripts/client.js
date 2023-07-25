@@ -15,7 +15,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.mjs@1/src/chess.mjs/Ch
 
 
 console.log("creating socket connection");
-const socket = new WebSocket("ws://nodechess.onrender.com:3001");
+const socket = new WebSocket("wss://nodechess.onrender.com:3001");
 var chess;
 var board;
 var color;
