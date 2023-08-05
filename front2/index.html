@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <section class="showcase">
+      <header>
+        <h2 class="logo">CHESS</h2>
+        <div class="toggle"></div>
+      </header>
+
+      <video
+        src="img/queen_check_in_chess (1080p).mp4"
+        muted
+        loop
+        autoplay
+      ></video>
+
+      <div class="overlay"></div>
+      <div class="text">
+        <h2>Node Chess</h2>
+        <h3>Multiplayer chess game</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur, adipisicing elit. At, iure
+          aspernatur autem commodi vero nobis praesentium reprehenderit illum
+          voluptate omnis officia sed voluptas dolor deleniti error inventore,
+          sapiente, nihil eos.
+        </p>
+        <a href="#">Play</a>
+      </div>
+    </section>
+
+    <div class="menu">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Play</a></li>
+        <li><a href="#">Log in</a></li>
+        <li><a href="#">Sign up</a></li>
+      </ul>
+    </div>
+
+    <script>
+      const menuToggle = document.querySelector(".toggle");
+      const showcase = document.querySelector(".showcase");
+
+      menuToggle.addEventListener("click", () => {
+        menuToggle.classList.toggle("active");
+        showcase.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>
