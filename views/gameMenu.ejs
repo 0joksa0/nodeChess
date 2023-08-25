@@ -11,18 +11,9 @@
     <%- include('./partials/navLog.ejs') %>
 
     <div class="content">
-        <a href="/game/<%= id %>">
+        <a href="/board">
             <p>PLAY A GAME</p>
         </a>
     </div>
-
-    <script>
-        var photo = document.getElementById('avatar');
-        var sideBar = document.querySelector('.sideBar');
-        photo.addEventListener("click", () =>{
-            console.log(sideBar)
-            sideBar.classList.toggle("hidden");
-        })
-    </script>
 </body>
 </html>

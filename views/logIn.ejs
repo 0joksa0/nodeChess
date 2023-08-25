@@ -12,10 +12,10 @@
     <div class="signUp content">
         <form action="/logIn" method="post" class="signUpForm">
             <h1>Log in</h1>
-            <% if (failed == 1) { %>
+            <% if (failed == true) { %>
              <p style= "color: red">Invalid username or password</p>
             <% } %>
-            <% if (failed == 2) { %>
+            <% if (failed == false) { %>
                 <h3 style= "color: lawngreen">LOGGED IN</h3>
             <% } %>
             <label for="username">Username:</label>

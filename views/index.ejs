@@ -9,7 +9,12 @@
   </head>
 
   <body>
-    <%- include('./partials/nav.ejs') %>
+    <% if (username == null) { %>
+      <%- include('./partials/nav.ejs') %>
+      <% } %>
+    <% if (username != null) { %>
+      <%- include('./partials/navLog.ejs') %>
+      <% } %>
     <div class="hero">
       <div class="textHero">
         <h1>Welcome to Chess Game!</h1>
