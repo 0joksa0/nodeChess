@@ -3,31 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>SIGNUP</title>
+    <link rel="shortcut icon" href="./imgs/favicon.ico">
     <link rel="stylesheet" href="nav.css">
-    <link rel="stylesheet" href="signUp.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleLogin.css">
 </head>
 <body>
+    <section class="showcase">
     <%- include('./partials/nav.ejs') %>
-    <div class="signUp content">
-        <form action="/signUp" method="post" class="signUpForm">
-            <h1>Create account</h1>
-            <% if (failed == true) { %>
-             <h3 style= "color: red">Username already taken</h3>
-            <% } %>
-            <% if (failed == false) { %>
-                <h3 style= "color: lawngreen">Account created</h3>
-            <% } %>
-            <label for="name">Name:</label>
-            <input type="text" name="name" id="name" required>
-            <label for="lastname">Lastname:</label>
-            <input type="text" name="lastname" id="lastname" required>
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="username">
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password">
-            <button class="submitBtn">Sign up</button>
-        </form>
-    </div>
+    <%- include('./partials/background.ejs') %>
+    <div class="wrapper active">
+        <span class="icon-close">
+          <ion-icon name="close-outline"></ion-icon>
+        </span>
+        <!-- granica -->
+        <div class="form-box register">
+          <h2>Registration</h2>
+          <% if (failed == 1) { %>
+            <p style= "color: red; text-align: center;">Username already taken</p>
+           <% } %>
+           <% if (failed == 2) { %>
+               <p style= "color: lawngreen; text-align: center;">Account created</p>
+           <% } %>
+          <form action="/signUp" method="post" >
+
+            <div class="input-box">
+                <span class="icon">
+                  <ion-icon name="person-outline"></ion-icon>
+                </span>
+                <input type="text" name="name" id="name" required />
+                <label>Name</label>
+              </div>
+            <div class="input-box">
+              <span class="icon">
+                <ion-icon name="person-outline"></ion-icon>
+              </span>
+              <input type="text" name="lastname" id="lastname" required />
+              <label>Last name</label>
+            </div>
+
+            <div class="input-box">
+              <span class="icon">
+                <ion-icon name="mail-outline"></ion-icon>
+              </span>
+              <input type="text" name="username" id="username" required />
+              <label>Username</label>
+            </div>
+            <div class="input-box">
+              <span class="icon">
+                <ion-icon name="lock-closed-outline"></ion-icon>
+              </span>
+              <input type="password" name="password" id="password" required />
+              <label>Password</label>
+            </div>
+            <div class="remember-forgot">
+              <label
+                ><input type="checkbox" required />I agree to terms & conditions</label
+              >
+            </div>
+            <button type="submit" class="btn">Register</button>
+            <div class="login-register">
+              <p>
+                Already have an account?<a href="/LogIn" class="login-link">Login</a>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
 </body>
 </html>

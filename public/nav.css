@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Belanosima&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Belanosima&display=swap'); */
 
 @keyframes popUp {
     0% {
@@ -39,7 +39,7 @@ a{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    font-size: 1.5rem;
+    font-size: 1em;
     color: azure;
 }
 
@@ -53,18 +53,41 @@ a{
     border-radius: 15px;
 }
 #logIn{
-    background-color: #200E4C;
+    display: inline-block;
+    font-size: 1em;
+    background: #fff;
+    padding: 10px 30px;
+    text-decoration: none;
+    color: #111;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.5s;
 }
 #logIn:hover{
-    background-color: #5C1E78;
+    color: #fff;
+    background-color: #111;
+    opacity: 0.5 ;
 }
 
 #signUp{
-    background-color: rgb(125,0,106);
+    
+    display: inline-block;
+    font-size: 1em;
+    background: #fff;
+    padding: 10px 30px;
+    text-decoration: none;
+    color: #111;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.5s;
 }
 
 #signUp:hover{
-    background-color: #200E4C;
+    color: #fff;
+    background-color: #111;
+    opacity: 0.5 ;
 }
 
 #avatar{
@@ -77,8 +100,8 @@ a{
     -moz-transition: all 0.5s linear;
     -o-transition: all 0.5s linear;
     transition: all 0.5s linear;
-    z-index: 0;
-    background-color: #200e4c36;
+    z-index: 10;
+    background-color: #11111187;
     backdrop-filter: blur(5px);
     height: 100%;
     width: 20%;
@@ -101,11 +124,22 @@ a{
 }
 
 #logOut{
-    background-color: rgb(125,0,106);
+    display: inline-block;
+    font-size: 1em;
+    background: #fff;
+    padding: 10px 30px;
+    text-decoration: none;
+    color: #111;
+    margin-top: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: 0.5s;
 }
 
 #logOut:hover{
-    background-color: #200E4C;
+    color: #fff;
+    background-color: #111;
+    opacity: 0.5 ;
 }
 
 

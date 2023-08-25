@@ -6,9 +6,6 @@ const WebSocket = require('ws');
 var httpServer;
 const app = express();
 
-//array of logged users
-var loggedUsers = new Array(); 
-
 //const for mongo db url
 const dbUrl =
   "mongodb+srv://chessGame:chess123@nodecc.9ciscng.mongodb.net/?retryWrites=true&w=majority";
@@ -44,7 +41,6 @@ app.use(session({ secret: secret, resave: false, saveUninitialized: true, cookie
 
 //routes
 app.get("/", (req, res) => {
-  //res.render("index");
   var loggedUser = isLoggedIn(req);
   if(!loggedUser)
     res.render("index", {username: null});

@@ -3,28 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>HOME</title>
+    <link rel="shortcut icon" href="./imgs/favicon.ico">
     <link rel="stylesheet" href="nav.css" />
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styleLogin.css">
   </head>
 
   <body>
-    <% if (username == null) { %>
-      <%- include('./partials/nav.ejs') %>
-      <% } %>
-    <% if (username != null) { %>
-      <%- include('./partials/navLog.ejs') %>
-      <% } %>
-    <div class="hero">
-      <div class="textHero">
-        <h1>Welcome to Chess Game!</h1>
+    <section class="showcase">
+    <%- include('./partials/nav.ejs') %>
+    <%- include('./partials/background.ejs')%>
+
+      <div class="text">
+        <h2>Welcome to Chess Game!</h2>
         <p>
           Experience the excitement of multiplayer chess battles from your
           browser. Challenge friends, compete globally, and showcase your
           skills.
         </p>
         <div>
-          <h2>Features:</h2>
+          <h3>Features:</h3>
           <ul>
             <li>Real-time multiplayer matches.</li>
             <li>Various game modes and time controls.</li>
@@ -34,11 +33,15 @@
           </ul>
         </div>
         <p>Join today and make your move towards victory!</p>
-        <a href="/signUp" id="signUp" class="button"><h1>LOG IN</h1></a>
+        <% if (username != null) { %>
+          <a href="/gameMenu">Play</a>
+        <% } else { %>
+          <a href="/logIn">Log In</a>
+        <% } %>
       </div>
-      <div class="heroImg">
-        <img src="./imgs/heroImg.png" alt="" srcset="" />
-      </div>
+
+     
+    </section>
     </div>
   </body>
 </html>

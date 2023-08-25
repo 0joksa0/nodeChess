@@ -19,11 +19,15 @@
         <p id="logOut" class="button">Log out</p>
       </a>
 </div>
+
 <script>
   var photo = document.getElementById('avatar');
   var sideBar = document.querySelector('.sideBar');
   photo.addEventListener("click", () =>{
       console.log(sideBar)
       sideBar.classList.toggle("hidden");
+  })
+  sideBar.addEventListener("mouseout", () =>{
+      sideBar.classList.add("hidden");
   })
 </script>

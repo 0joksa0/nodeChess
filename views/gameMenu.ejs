@@ -4,16 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOBBY</title>
+    <link rel="shortcut icon" href="./imgs/favicon.ico">
     <link rel="stylesheet" href="/nav.css">
     <link rel="stylesheet" href="/gameMenu.css">
+    <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-    <%- include('./partials/navLog.ejs') %>
+    <section class="showcase">
+    <%- include('./partials/navLog.ejs') %><video
+    src="./../imgs/queen_check_in_chess (1080p).mp4"
+    muted
+    loop
+    autoplay
+  ></video>
+  <div class="overlay"></div>
 
-    <div class="content">
-        <a href="/board">
-            <p>PLAY A GAME</p>
+    <div class="text">
+        <p>
+            Unleash your strategic prowess as you click that play button! Join a global community of chess enthusiasts and embark on thrilling real-time matches. Whether you're a tactical genius or a curious learner, our game room offers a welcoming space to challenge opponents, forge alliances, and master the art of chess. Ready to make your move?
+        </p>
+        <a href="/game/<%= id %>">
+            PLAY A GAME
         </a>
     </div>
-</body>
+    </section>
+   
 </html>
