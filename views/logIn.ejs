@@ -37,10 +37,10 @@
             <button type="submit" class="btn">Login</button>
             <div class="login-register">
                 <% if (failed == 1) { %>
-                  <p style= "color: red">Invalid username or password</p>
+                  <p style= "color: red; text-align: center;">Invalid username or password</p>
                  <% } %>
                  <% if (failed == 2) { %>
-                     <h3 style= "color: lawngreen">LOGGED IN</h3>
+                     <h3 style= "color: lawngreen; text-align: center;">LOGGED IN</h3>
                  <% } %>
               <p>
                 Don't have an account?<a href="/SignUp" class="register-link"
@@ -52,44 +52,7 @@
         </div>
 
         <!-- granica -->
-        <div class="form-box register">
-          <h2>Registration</h2>
-          <form action="#">
-            <div class="input-box">
-              <span class="icon">
-                <ion-icon name="person-outline"></ion-icon>
-              </span>
-              <input type="text" required />
-              <label>Username</label>
-            </div>
-
-            <div class="input-box">
-              <span class="icon">
-                <ion-icon name="mail-outline"></ion-icon>
-              </span>
-              <input type="email" required />
-              <label>Email</label>
-            </div>
-            <div class="input-box">
-              <span class="icon">
-                <ion-icon name="lock-closed-outline"></ion-icon>
-              </span>
-              <input type="password" required />
-              <label>Password</label>
-            </div>
-            <div class="remember-forgot">
-              <label
-                ><input type="checkbox" />I agree to terms & conditions</label
-              >
-            </div>
-            <button type="submit" class="btn">Register</button>
-            <div class="login-register">
-              <p>
-                Already have an account?<a href="#" class="login-link">Login</a>
-              </p>
-            </div>
-          </form>
-        </div>
+    
       </div>
     </section>
 </body>

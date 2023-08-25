@@ -13,10 +13,11 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    animation: 0.5s ease-out 0s 1 popUp;
 }
 
 .wrapper.active{
-    height:520px;
+    height:600px;
 }
 
 
