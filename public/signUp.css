@@ -4,8 +4,6 @@ body{
     height: 100vh;
     font-size: 2rem;
     font-family: 'Belanosima', sans-serif;
-    background: rgb(125,0,106);
-    background: linear-gradient(110deg, rgba(125,0,106,1) -50%, rgba(41,6,90,1) 100%);
     overflow: hidden;
 }
 .signUp{
