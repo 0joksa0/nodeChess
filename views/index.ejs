@@ -34,7 +34,11 @@
           </ul>
         </div>
         <p>Join today and make your move towards victory!</p>
-        <a href="#">Play</a>
+        <% if (username != null) { %>
+          <a href="/gameMenu">Play</a>
+        <% } else { %>
+          <a href="/logIn">Log In</a>
+        <% } %>
       </div>
 
      

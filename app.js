@@ -28,7 +28,7 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.render("index");
+  res.render("index", { username: null});
 });
 
 app.get("/signUp", (req, res) => {
