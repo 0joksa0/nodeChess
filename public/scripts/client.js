@@ -1,4 +1,3 @@
-
 import {
     INPUT_EVENT_TYPE,
     COLOR,
@@ -15,7 +14,7 @@ import { Chess } from "https://cdn.jsdelivr.net/npm/chess.mjs@1/src/chess.mjs/Ch
 
 
 console.log("creating socket connection");
-const socket = new WebSocket("wss://nodechess.onrender.com");
+const socket = new WebSocket("ws://localhost:3001");
 var chess;
 var board;
 var color;
@@ -31,40 +30,66 @@ socket.onmessage = (message) => {
         case "gameStart":
             console.log("game start");
             boardConfig(data);
-            board.enableMoveInput(inputHandler, color);
-            
+            board.enableMoveInput(inputHandler, color); 
             break;
+        case "OpponentDisconnected":
+            console.log("opponent disconnected");
+            break;
+        case "OpponentSurrendered":
+            console.log("opponent surrendered");
+            break;    
         case "updateBoard":
             console.log("update board");
             console.log(chess);
-            board.setPosition(data.chess, true);
-            chess.load(data.chess);
-            chess._turn = data.turn;
-            console.log(chess);    
-            board.enableMoveInput(inputHandler, color);
-        break;
+            updateBoard();
+            break;
         case "gameOver":
+            //update board for last time
             board.setPosition(data.chess, true);
             chess.load(data.chess);
             chess._turn = data.turn;
             console.log(chess);
+
             //need to check if checkmate and for what color it is
-            if(chess.in_checkmate()){
+            if(chess.in_checkmate() && data.turn == color){
                 console.log("loss");
-            } else {
+            } 
+            if(chess.in_checkmate() && data.turn != color){
                 console.log("win");
             }
-        break;
+            if(chess.in_draw()){
+                console.log("draw");
+            }
+            if(chess.in_stalemate()){
+                console.log("stalemate");
+            }
+            break;
         
+    }
+
+    function updateBoard() {
+        board.setPosition(data.chess, true);
+        chess.load(data.chess);
+        chess._turn = data.turn;
+        console.log(chess);
+        board.enableMoveInput(inputHandler, color);
     }
 };
 
+socket.onclose = () => {
+    console.log("connection closed");
+}
+
 function boardConfig(data) {
+    //set color and fen
     color = data.color == "white" ? COLOR.white : COLOR.black;
     var fen = data.chess;
+
+    //create chess object
     chess = new Chess(fen);
     chess._turn = data.turn;
-    console.log(fen);
+
+    //create board
     board = new Chessboard(document.getElementById("boardChess"), {
         position: fen,
         responsive: true,
