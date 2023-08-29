@@ -18,6 +18,8 @@ const socket = new WebSocket("ws://localhost:3001");
 var chess;
 var board;
 var color;
+const player = document.getElementsByClassName("player");
+const opponent = document.getElementsByClassName("opponent");
 
 socket.onopen = () => {
     console.log("connection established");
@@ -72,8 +74,12 @@ socket.onmessage = (message) => {
         chess.load(data.chess);
         chess._turn = data.turn;
         console.log(chess);
+        player[0].classList.toggle("onTheMove");
+        opponent[0].classList.toggle("onTheMove");
         board.enableMoveInput(inputHandler, color);
+        
     }
+
 };
 
 socket.onclose = () => {
@@ -88,6 +94,27 @@ function boardConfig(data) {
     //create chess object
     chess = new Chess(fen);
     chess._turn = data.turn;
+
+
+    //remove loading screen
+    document.getElementsByClassName("loading")[0].style.display = "none";
+
+    //set icons
+    player[0].classList.toggle("visible")
+    opponent[0].classList.toggle("visible")
+    if (color == COLOR.white) {
+        player[0].classList.toggle("onTheMove")
+        player[0].style.background= "white";
+        player[0].style.color= "black";
+        opponent[0].style.background = "black";
+    }
+    else {
+        player[0].style.background = "black";
+        opponent[0].classList.toggle("onTheMove")
+        opponent[0].style.background = "white";
+        opponent[0].style.color = "black";
+    }
+
 
     //create board
     board = new Chessboard(document.getElementById("boardChess"), {

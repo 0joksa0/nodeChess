@@ -43,6 +43,9 @@
                  <% if (failed == 2) { %>
                      <h3 style= "color: lawngreen; text-align: center;">LOGGED IN</h3>
                  <% } %>
+                 <% if (loggedIn == true) { %>
+                  <p style= "color: red; text-align: center;">You can be logged in from one browser at the time</p>
+                 <% } %>
               <p>
                 Don't have an account?<a href="/SignUp" class="register-link"
                   >Register</a
