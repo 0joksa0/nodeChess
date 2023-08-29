@@ -101,8 +101,20 @@ app.post("/logIn", (req, res) => {
     //save user id in session and pushing that session to loggedUsers array
     var session = req.session;
 
-    if(!loggedUsers.includes(user))
-        loggedUsers.push({session: req.session, user: user})
+    // if(!loggedUsers.includes(user.user))
+    //     loggedUsers.push({session: req.session, user: user})
+    if(loggedUsers.length == 0)
+      loggedUsers.push({session: req.session, user: user})
+    else{
+      loggedUsers.forEach(loggedUser => {
+        if(loggedUser.user.username != user.username) 
+          loggedUsers.push({session: req.session, user: user})
+        else
+          res.render("logIn", { failed: false, loggedIn: true });
+        //add front to show that user can be logged jost from one browser
+      });
+    }
+  
     console.log(loggedUsers)
 
     res.redirect('/gameMenu');
@@ -179,5 +191,3 @@ function isLoggedIn(req) {
 
   return loggedUser != undefined ? loggedUser.user : false;
 }
-
-//make a game and return it
