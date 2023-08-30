@@ -1,0 +1,15 @@
+{
+    "window.autoDetectColorScheme": false,
+    "window.titleSeparator": "-",
+    "window.title": "${dirty}${activeEditorShort}${separator}${rootName}${separator}${profileName}${separator}${appName}",
+    "accessibility.verbosity.inlineChat": true,
+    "window.commandCenter": false,
+    "workbench.activityBar.visible": true,
+    "workbench.colorTheme": "2077",
+    "workbench.preferredDarkColorTheme": "2077",
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.statusBar.visible": true,
+    "workbench.tips.enabled": true,
+    "workbench.tree.renderIndentGuides": "always",
+    "workbench.view.alwaysShowHeaderActions": true
+}

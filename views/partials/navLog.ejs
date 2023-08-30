@@ -1,0 +1,33 @@
+<nav class="site-nav">
+    <a href="/">
+      <h1>CHESS</h1>
+    </a>
+    <ul>
+      <li><a href="/">HOME</a></li>
+      <li><a href="./">ABOUT US</a></li>
+      <li><a href="/gameMenu">GAME</a></li>
+    </ul>
+    <ul>
+      <h2><%= username %></h2>
+      <img id="avatar" src="/imgs/avatarEmpty.png" alt="" />
+    </ul>
+</nav>
+<div class="sideBar hidden">
+    <h4><%= name %></h4>
+    <h4><%= lastname %></h4>
+    <a href="/logOut">
+        <p id="logOut" class="button">Log out</p>
+      </a>
+</div>
+
+<script>
+  var photo = document.getElementById('avatar');
+  var sideBar = document.querySelector('.sideBar');
+  photo.addEventListener("click", () =>{
+      console.log(sideBar)
+      sideBar.classList.toggle("hidden");
+  })
+  sideBar.addEventListener("mouseout", () =>{
+      sideBar.classList.add("hidden");
+  })
+</script>
