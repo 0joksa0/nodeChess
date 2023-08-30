@@ -2,9 +2,10 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require("mongoose");
 const User = require("./models/user");
-const WebSocket = require('ws');
-var httpServer;
 const app = express();
+
+//array of logged users
+var loggedUsers = new Array(); 
 
 //const for mongo db url
 const dbUrl =
@@ -14,8 +15,6 @@ const dbUrl =
 const secret = "secret";
 const oneDay = 1000 * 60 * 60 * 24;
 
-//const for web socket server
-const wss = new WebSocket.Server({ noServer: true });
 
 //set for ejs template engine
 app.set("view engine", "ejs");
@@ -74,7 +73,7 @@ app.post("/signUp", (req, res) => {
 app.get("/logIn", (req, res) => {
   var loggedUser = isLoggedIn(req);
   if(!loggedUser){
-    res.render("logIn", { failed: null });
+    res.render("logIn", { failed: null,  loggedIn: false});
     return;
   }
   res.redirect("/")
@@ -87,39 +86,45 @@ app.post("/logIn", (req, res) => {
     
     //bad username
     if (result == null) {
-      res.render("logIn", { failed: true });
+      res.render("logIn", { failed: true ,  loggedIn: false});
       return;
     }
 
     //bad password
     if (user.password != req.body.password) {
       //console.log("in else part" + user.id);
-      res.render("logIn", { failed: true });
+      res.render("logIn", { failed: true,  loggedIn: false  });
       return;
     }
 
     //save user id in session and pushing that session to loggedUsers array
-    var session = req.session;
+    var loggedIn = false;
 
-    // if(!loggedUsers.includes(user.user))
-    //     loggedUsers.push({session: req.session, user: user})
     if(loggedUsers.length == 0)
       loggedUsers.push({session: req.session, user: user})
     else{
       loggedUsers.forEach(loggedUser => {
-        if(loggedUser.user.username != user.username) 
+        if(loggedUser.user.username != user.username) {
           loggedUsers.push({session: req.session, user: user})
-        else
-          res.render("logIn", { failed: false, loggedIn: true });
-        //add front to show that user can be logged jost from one browser
+          loggedIn = false;
+        }
+        else{
+          loggedIn = true;
+        }
       });
     }
-  
-    console.log(loggedUsers)
+    if(loggedIn){
+      res.render("logIn", { failed: false, loggedIn: true });
+      return;
+    }else{
+      res.redirect('/gameMenu');
+      console.log("Logged in user id:" + user.id);
+      console.log(loggedUsers)
+      return;
+    }
 
-    res.redirect('/gameMenu');
-    console.log("Logged in user id:" + user.id);
-    return;
+
+    
   });
 
 });

@@ -12,7 +12,11 @@
 
   <body>
     <section class="showcase">
-    <%- include('./partials/nav.ejs') %>
+    <% if (username == null ) { %>
+      <%- include('./partials/nav.ejs') %>
+    <% } else { %>
+      <%- include('./partials/navLog.ejs') %>
+    <% } %>
     <%- include('./partials/background.ejs')%>
 
       <div class="text">
