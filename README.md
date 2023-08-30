@@ -28,13 +28,13 @@ To get started with the Chess Game, follow these steps:
 1. Clone the repository to your local machine:
 
    ```bash
-   git clone https://github.com/your-username/chess-game.git
+   https://github.com/0joksa0/nodeChess.git
    ```
 
 2. Navigate to the project directory:
 
    ```bash
-   cd chess-game
+   cd nodeChess
    ```
 
 3. Install the project dependencies using npm:
@@ -48,10 +48,10 @@ To get started with the Chess Game, follow these steps:
 To launch the Chess Game, execute the following command:
 
 ```bash
-npm start
+node ws-server.js
 ```
 
-Once the server is running, open your web browser and visit `http://localhost:3000` to access the game.
+Once the server is running, open your web browser and visit `http://localhost:3001` to access the game.
 
 Upon accessing the game, you have the option to sign up for a new account or log in if you already have an account. After logging in, two players can join the game and start playing against each other in real time.
 
@@ -59,12 +59,13 @@ Upon accessing the game, you have the option to sign up for a new account or log
 
 The Chess Game project has the following structure:
 
-- `app.js`: The main server file responsible for managing game state, enforcing rules, and handling communication with clients.
+- `app.js`: The main server file responsible for managing requests.
+- `ws-server.js`: The main server file responsible for managing game state, enforcing rules, and handling communication with clients
 - `public/`: Contains the client-side JavaScript, CSS, and HTML files for the user interface.
 - `src/`: Includes additional server-side logic and utilities for the game.
 - `models/`: Holds the database-related files, such as models and connection configurations.
 
-## User Statistics
+## User Statistics (Future Enhancement)
 
 The game utilizes a MongoDB database for user account management. You can leverage this database to store and track user statistics. By extending the existing database models, you can add fields for statistics such as the number of games played, wins, losses, and draw ratios. Storing this information will allow you to retrieve and display user statistics within the game interface.
 
@@ -72,7 +73,7 @@ The game utilizes a MongoDB database for user account management. You can levera
 
 In addition to user statistics, you have expressed interest in integrating a chess engine to allow players to play against a bot. This enhancement will provide a challenging experience for players. There are various chess engine libraries available in Node.js, such as Stockfish or Chess.js AI, that you can leverage for this purpose. By creating a new game mode, players can choose to play against the bot, and the chess engine can handle the moves for the bot player based on the game's current state.
 
-## Game Modes
+## Game Modes (Future Enhancement)
 
 The Chess Game offers various game modes to cater to different preferences and time constraints. Alongside the default mode, you can expect additional modes, including different time controls. These may include modes like 5 minutes, blitz, rapid, and more. Each mode will have its own time restrictions to provide players with a variety of gameplay options.
 
