@@ -32,13 +32,20 @@ socket.onmessage = (message) => {
         case "gameStart":
             console.log("game start");
             boardConfig(data);
-            board.enableMoveInput(inputHandler, color); 
+            console.log(chess.turn());
+            console.log("on the move" + data.turn + color);
+            if((color == COLOR.white && chess.turn() == 'w')  || (color == COLOR.black && chess.turn() == 'b')){
+                console.log("on the move in if" + chess._turn + color);
+                board.enableMoveInput(inputHandler, color); 
+            }
             break;
         case "OpponentDisconnected":
             console.log("opponent disconnected");
             break;
         case "OpponentSurrendered":
-            console.log("opponent surrendered");
+            document.getElementsByClassName("endPopUp")[0].style.visibility = "visible";
+            document.getElementsByClassName("endPopUp")[0].style.zIndex = "10";
+            document.getElementById('endPopUp_result').textContent = 'OPPONENT SURRENDERED';
             break;    
         case "updateBoard":
             console.log("update board");
@@ -52,18 +59,19 @@ socket.onmessage = (message) => {
             chess._turn = data.turn;
             console.log(chess);
 
+            document.getElementsByClassName("endPopUp")[0].style.visibility = "visible";
+            document.getElementsByClassName("endPopUp")[0].style.zIndex = "10";
+
+
             //need to check if checkmate and for what color it is
             if(chess.in_checkmate() && data.turn == color){
-                console.log("loss");
+                document.getElementById('endPopUp_result').textContent = 'YOU LOSE';
             } 
             if(chess.in_checkmate() && data.turn != color){
-                console.log("win");
+                document.getElementById('endPopUp_result').textContent = 'YOU WIN';
             }
             if(chess.in_draw()){
-                console.log("draw");
-            }
-            if(chess.in_stalemate()){
-                console.log("stalemate");
+                document.getElementById('endPopUp_result').textContent = 'DRAW';
             }
             break;
         
@@ -76,7 +84,7 @@ socket.onmessage = (message) => {
         console.log(chess);
         player[0].classList.toggle("onTheMove");
         opponent[0].classList.toggle("onTheMove");
-        board.enableMoveInput(inputHandler, color);
+            board.enableMoveInput(inputHandler, color);
         
     }
 
@@ -103,17 +111,22 @@ function boardConfig(data) {
     player[0].classList.toggle("visible")
     opponent[0].classList.toggle("visible")
     if (color == COLOR.white) {
-        player[0].classList.toggle("onTheMove")
         player[0].style.background= "white";
         player[0].style.color= "black";
         opponent[0].style.background = "black";
     }
     else {
         player[0].style.background = "black";
-        opponent[0].classList.toggle("onTheMove")
         opponent[0].style.background = "white";
         opponent[0].style.color = "black";
     }
+
+    if(chess.turn() == color){
+        player[0].classList.toggle("onTheMove")
+    }else{
+        opponent[0].classList.toggle("onTheMove")
+    }
+
 
 
     //create board
