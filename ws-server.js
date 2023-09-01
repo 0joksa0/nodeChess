@@ -13,8 +13,8 @@ const { app, loggedUsers } = require("./app.js");
 const { Chess } = require("chess.js");
 
 //create web socket server
-const wss = new WebSocket({ server: server });
-
+//const wss = new WebSocket({ server: server });
+const wss=new WebSocket('wss://node-chess-game.onrender.com');
 //set app to handle requests
 var res = server.on("request", app);
 
